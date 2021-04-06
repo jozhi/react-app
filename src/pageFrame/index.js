@@ -6,38 +6,19 @@ import {
   Link
 } from "react-router-dom";
 
-// Each logical "route" has two components, one for
-// the sidebar and one for the main area. We want to
-// render both of them in different places when the
-// path matches the current URL.
-
-// We are going to use this route config in 2
-// spots: once for the sidebar and once in the main
-// content section. All routes are in the same
-// order they would appear in a <Switch>.
-// const routes = [
-//   {
-//     path: "/",
-//     exact: true,
-//     sidebar: () => <div>home!</div>,
-//     main: () => <h2>Home</h2>
-//   },
-//   {
-//     path: "/bubblegum",
-//     sidebar: () => <div>bubblegum!</div>,
-//     main: () => <h2>Bubblegum</h2>
-//   },
-//   {
-//     path: "/shoelaces",
-//     sidebar: () => <div>shoelaces!</div>,
-//     main: () => <h2>Shoelaces</h2>
-//   }
-// ];
+import routes from '@/router'
 
 
-import routes from '../../router'
 
-console.log('routes',routes)
+const Sidebar = (props)=>{
+  const _data = props.data
+  const listItem = _data.map((item) => {
+    return <li key={item.path}> <Link to={item.path} >{item.path}</Link> </li>
+  })
+  return (
+    <ul style={{ listStyleType: "none", padding: 0 }}>{listItem}</ul>
+  )
+}
 
 export default function SidebarExample() {
   return (
@@ -46,21 +27,11 @@ export default function SidebarExample() {
         <div
           style={{
             padding: "10px",
-            width: "200px",
+            width: "200px", 
             background: "#f0f0f0"
           }}
         >
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/list">Bubblegum</Link>
-            </li>
-            <li>
-              <Link to="/form">Shoelaces</Link>
-            </li>
-          </ul>
+          <Sidebar data={routes}></Sidebar>
 
           {/* <Switch>
             {routes.map((route, index) => (
